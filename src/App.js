@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import "./App.css";
 import Todo from "./Todo";
+import db from './firebase';
+import firebase from 'firebase';
+
 
 function App() {
   const [todos, setTodos] = useState([
-    "Revise React Daily",
-    "Revise Js Daily",
-    "adding few more",
+    'abc','def'
   ]);
   const [input, setInput] = useState('');
 
+  //when the app loads we need to listen to the database and fetch new todos as get added / remove
+  useEffect(() =>{
+    //this code here fires when app loads
+    db.collection('todos').onSnapshot(snapshot =>{
+      
+      setTodos(snapshot.docs.map(doc => doc.data().todo))
+    }
+  )},[]);
   const addTodo = (event) => {
     //this will fire off when we click the button
     event.preventDefault(); //it will stop refreshing the page 
-    console.log('todo connect');
+    db.collection('todo').add({
+      todo:input,
+      timestamp:firebase.firestore.FieldValue.serverTimestamp()
+    })
     setTodos([...todos, input]);
     setInput('');  //clear up the input after hitting submit
+    console.log(todos);
   }
 
   return (
