@@ -15,7 +15,7 @@ function App() {
   //when the app loads we need to listen to the database and fetch new todos as get added / remove
   useEffect(() =>{
     //this code here fires when app loads
-    db.collection('todos').onSnapshot(snapshot =>{
+    db.collection('todos').orderBy('timestamp','desc').onSnapshot(snapshot =>{
       
       setTodos(snapshot.docs.map(doc => doc.data().todo))
     }
@@ -39,7 +39,7 @@ function App() {
        
 
         <FormControl>
-        <InputLabel>:Write a todo</InputLabel>
+        <InputLabel>Write a todo</InputLabel>
         <Input value={input} onChange={event => setInput(event.target.value)}/>
   
   
