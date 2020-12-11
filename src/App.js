@@ -8,7 +8,7 @@ import firebase from 'firebase';
 
 function App() {
   const [todos, setTodos] = useState([
-    'abc','def'
+    
   ]);
   const [input, setInput] = useState('');
 
@@ -17,13 +17,13 @@ function App() {
     //this code here fires when app loads
     db.collection('todos').orderBy('timestamp','desc').onSnapshot(snapshot =>{
       
-      setTodos(snapshot.docs.map(doc => doc.data().todo))
+      setTodos(snapshot.docs.map(doc => ({id:doc.id,todo:doc.data().todo})))
     }
   )},[]);
   const addTodo = (event) => {
     //this will fire off when we click the button
     event.preventDefault(); //it will stop refreshing the page 
-    db.collection('todo').add({
+    db.collection('todos').add({
       todo:input,
       timestamp:firebase.firestore.FieldValue.serverTimestamp()
     })
@@ -46,16 +46,16 @@ function App() {
         </FormControl>
 
         <Button disabled ={!input}  type="submit" onClick={addTodo} variant="contained" color="primary">
-        Add todo
+        Add Todo
 </Button>
 
-      {/*   <button  >Add todo</button> */}
+      
       </form>
 
       <ul>
         {todos.map(todo => (
-          <Todo text ={todo}/>
-          // <li>{todo}</li>
+          <Todo todo ={todo}/>
+          
         ))}
       </ul>
     </div>
