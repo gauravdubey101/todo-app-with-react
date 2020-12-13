@@ -4,3 +4,8 @@
     text-align: center;
     
 }
+input{
+    padding:10px;
+    margin:5px;
+    border-radius: 8px;
+}

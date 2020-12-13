@@ -18,11 +18,12 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     paper:{
         position:'absolute',
-        width:400,
+        width:500,
         backgroundColor:theme.palette.background.paper,
         border:'2px soild #000',
         boxShadow:theme.shadows[5],
-        padding:theme.spacing(2,4,3),
+        padding:theme.spacing(9,50,3),
+        
     },
 }));
 
@@ -55,7 +56,7 @@ function Todo(props) {
     <div className = {classes.paper}>
         <h1>I am a modal</h1>
         <input placeholder={props.todo.todo} value={input} onChange={event => setInput(event.target.value)} />
-        <Button onClick={e=>setOpen(false)}>Update Todo</Button>
+        <Button onClick={updateTodo}>Update Todo</Button>
     </div>
   
 </Modal>
